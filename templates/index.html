@@ -89,12 +89,26 @@
             return response.json();
         }).then(function(jsonResponse) {
 
-            const liItem= document.createElement('LI');
-            liItem.innerHTML = jsonResponse['description'];
+            const liItem= document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.className ='check-completed';
+            checkbox.type = 'checkbox';
+            checkbox.setAttribute('data-id', jsonResponse.id);
+            li.appendChild(checkbox);
+
+            const text = document.createTextNode(' ' + jsonResponse.description);
+            li.appendChild(text)
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-button',
+            deleteBtn.setAttribute('data-id', jsonResponse.id)
+            deleteBtn.innerHTML = '&cross';
+            li.appendChild(deleteBtn)
+
             document.getElementById('todos').appendChild(liItem);
             document.getElementById('error').classname='hidden';
         }).catch(function() {
-
+            console.error('error occured');
             document.getElementById('error').className='';
         })
     }
