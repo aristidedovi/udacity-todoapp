@@ -43,6 +43,7 @@
             <li>
                 <input class="check-completed" type="checkbox" data-id="{{ todo.id }}" {% if todo.completed %} checked {% endif %}/>
                 {{ todo.description }}
+                <button>&cross;</button>
             </li>
         {% endfor %}
     </ul>
@@ -54,9 +55,9 @@
         const checkbox = checkboxes[1];
         checkbox.onchange = function(e) {
             const newCompleted = e.target.checked;
-            const todoId = e.target.dataSet['id']
+            const todoId = e.target.dataset['id']
 
-            fetch('/todos/' + todoId + '/set_completed', {
+            fetch('/todos/' + todoId + '/set-completed', {
                 method: 'POST',
                 body: JSON.stringify({
                     'completed': newCompleted
