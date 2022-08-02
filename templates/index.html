@@ -50,11 +50,11 @@
 
 <script>
     //AJAX POST FOR DELETE TODO
-    const deletedBtns = document.querySelectorAll('.delele-button')
+    const deletedBtns = document.querySelectorAll('.delete-button')
     for (let i = 0; i  < deletedBtns.length; i++ ) {
         const deleteBtn = deletedBtns[i];
         deleteBtn.onclick = function(e) {
-            const todoId = e.target.datase['id']
+            const todoId = e.target.dataset['id']
 
             fetch('/todos/' + todoId + 'delete',{
                 method: 'POST',
