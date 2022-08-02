@@ -5,7 +5,7 @@ import sys
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5433/todoapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/todoapp'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -91,4 +91,4 @@ def index():
 
 #ajoutez toujours ceci à la fin de votre code
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=5000)
