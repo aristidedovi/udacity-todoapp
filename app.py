@@ -59,7 +59,7 @@ def set_completed_todo(todo_id):
     
     return redirect(url_for('index'))
 
-@app.route('/todos/<todo_id>/delete', methods=['POST'])
+@app.route('/todos/<todo_id>/delete', methods=['DELETE'])
 def delete_todo(todo_id):
     try:
         todo = Todo.query.filter_by(id == todo_id)
