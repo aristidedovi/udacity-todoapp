@@ -5,47 +5,112 @@
             .hidden {
                 display: none;
             }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                width: 30px;
+            }
+            li {
+                clear: both;
+            }
+            li button {
+                -webkit-appearance: none;
+                border: none;
+                outline: none;
+                color: red;
+                float: right;
+                cursor: pointer;
+                font-size: 20px;
+            }
+            .lists-wrapper, .todos_wrapper {
+                display: inline-block;
+                vertical-align: top;
+            } 
         </style>
     </head>
 <body>
+    
+    <div class="lists-wrapper">
+        <ul id='lists'>
+            {% for list in lists %}
+                <a href="/lists/{{ list.id }}"><li>{{ list.name }}</li></a>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="todos-wrapper">
+        <h4>{{active_list.name}}</h4>
+    </div>
+
+
     <form id='form'>
         <input type="text" id='description' />
         <input type="submit" value="Create" />
     </form>
-    <ul id='todos'>
-        {% for d in data %}
-            <li>{{ d.description }}</li>
+
+    <div class = "hidden" id = "error" > Something went wrong! </div>
+
+    <ul id="todos">
+        {% for todo in todos %}
+            <li>
+                <input class="check_completed" type="checkbox" data-id="{{ todo.id }}" {% if todo.completed %} checked {% endif %}/>
+                {{ todo.description }}
+            </li>
         {% endfor %}
     </ul>
 
-<div class = "hidden" id = "error" > Something went wrong! </div>
-
 <script>
-const descInput = document.getElementById('description');
-document.getElementById('form').onsubmit = function (e) {
-    e.preventDefault();
-    const desc = descInput.value;
+    //AJAX POST REQUEST FOR UPDATE
+    const checkboxes = document.querySelectorAll('.check-completed')
+    for (let i = 0; i < checkboxes.length; i++) {
+        const checkbox = checkboxes[1];
+        checkbox.onchange = function(e) {
+            const newCompleted = e.target.checked;
+            const todoId = e.target.dataSet['id']
 
-    fetch('/todos/create', {
-        method: 'POST',
-        body: JSON.stringify({'description': desc}),
-        headers: {
-            'Content-Type': 'application/json',
+            fetch('/todos/' + todoId + '/set_completed', {
+                method: 'POST',
+                body: JSON.stringify({
+                    'completed': newCompleted
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function() {
+                document.getElementById('error').className='hidden';
+            }).catch(function() {
+                document.getElementById('error').className='';
+            })
         }
-    }).then(function(response) {
+    }
 
-        return response.json();
-    }).then(function(jsonResponse) {
+    //AJAX POST REQUEST FOR ADD TODOS
+    const descInput = document.getElementById('description');
+    document.getElementById('form').onsubmit = function (e) {
+        e.preventDefault();
+        const desc = descInput.value;
 
-        const liItem= document.createElement('LI');
-        liItem.innerHTML = jsonResponse['description'];
-        document.getElementById('todos').appendChild(liItem);
-        document.getElementById('error').classname='hidden';
-    }).catch(function() {
+        fetch('/todos/create', {
+            method: 'POST',
+            body: JSON.stringify({'description': desc}),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(function(response) {
 
-        document.getElementById('error').className='';
-    })
-}
+            return response.json();
+        }).then(function(jsonResponse) {
+
+            const liItem= document.createElement('LI');
+            liItem.innerHTML = jsonResponse['description'];
+            document.getElementById('todos').appendChild(liItem);
+            document.getElementById('error').classname='hidden';
+        }).catch(function() {
+
+            document.getElementById('error').className='';
+        })
+    }
 
 </script>
 </body>
