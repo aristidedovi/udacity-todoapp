@@ -43,12 +43,38 @@
             <li>
                 <input class="check-completed" type="checkbox" data-id="{{ todo.id }}" {% if todo.completed %} checked {% endif %}/>
                 {{ todo.description }}
-                <button>&cross;</button>
+                <button class="delete-button">&cross;</button>
             </li>
         {% endfor %}
     </ul>
 
 <script>
+    
+    //AJAX POST FOR DELETE TODO
+    const deletedBtns = document.querySelectorAll('.delele-button')
+    for (let i = 0; i  < deletedBtns.length; i++ ) {
+        const deleteBtn = deletedBtns[i];
+        deleteBtn.onclick = function(e) {
+            const todoId = e.target.datase['id']
+
+            fetch('/todos/' + todoId + 'delete',{
+                method: 'POST',
+                body: JSON.stringify({
+                    'Deleted': True
+                }),
+                headers: {
+                    'Content-Type': 'applcation-json'
+                }
+            }).then(function() {
+                document.getElementById('error').className='hidden';
+            }).catch(function() {
+                document.getElementById('error').className='';
+            })
+        }
+    }
+
+
+
     //AJAX POST REQUEST FOR UPDATE
     const checkboxes = document.querySelectorAll('.check-completed')
     for (let i = 0; i < checkboxes.length; i++) {
