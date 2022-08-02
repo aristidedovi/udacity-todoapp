@@ -89,7 +89,7 @@
             return response.json();
         }).then(function(jsonResponse) {
 
-            const liItem= document.createElement('li');
+            const li = document.createElement('li');
             const checkbox = document.createElement('input');
             checkbox.className ='check-completed';
             checkbox.type = 'checkbox';
@@ -97,16 +97,16 @@
             li.appendChild(checkbox);
 
             const text = document.createTextNode(' ' + jsonResponse.description);
-            li.appendChild(text)
+            li.appendChild(text);
 
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-button',
             deleteBtn.setAttribute('data-id', jsonResponse.id)
             deleteBtn.innerHTML = '&cross';
-            li.appendChild(deleteBtn)
+            li.appendChild(deleteBtn);
 
-            document.getElementById('todos').appendChild(liItem);
-            document.getElementById('error').classname='hidden';
+            document.getElementById('todos').appendChild(li);
+            document.getElementById('error').className='hidden';
         }).catch(function() {
             console.error('error occured');
             document.getElementById('error').className='';
