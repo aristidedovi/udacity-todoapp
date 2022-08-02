@@ -63,8 +63,7 @@ def set_completed_todo(todo_id):
 @app.route('/todos/<todo_id>/delete', methods=['DELETE'])
 def delete_todo(todo_id):
     try:
-        todo = Todo.query.filter_by(id == todo_id)
-        db.session.delete(todo)
+        Todo.query.filter_by(id=todo_id).delete()
         db.session.commit()
     except:
         db.session.rollback()
