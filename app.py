@@ -25,10 +25,13 @@ def create_todo():
     error = False
     try:
         description =  request.get_json()['description']
-        todo = Todo(description=description)
-        body['description'] = todo.description
+        todo = Todo(description=description, completed=False)
         db.session.add(todo)
         db.session.commit()
+        body['id'] = todo.id
+        body['description'] = todo.description
+        body['completed'] = todo.completed
+
     except:
         error = True
         db.session.rollback()
@@ -40,10 +43,6 @@ def create_todo():
         abort(400)
     else:
         return jsonify(body)
-
-@app.route('/')
-def index():
-    return render_template('index.html', data=Todo.query.all())
 
 @app.route('/todos/<todo_id>/set_completed', methods=['POST'])
 def set_completed_todo(id):
@@ -59,6 +58,10 @@ def set_completed_todo(id):
         db.session.close()
     
     return redirect(url_for('index'))
+
+@app.route('/')
+def index():
+    return render_template('index.html', todos=Todo.query.order_by('id').all())
 
 
 
