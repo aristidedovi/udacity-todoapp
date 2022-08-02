@@ -58,7 +58,7 @@
         deleteBtn.onclick = function(e) {
             const todoId = e.target.dataset['id']
 
-            fetch('/todos/' + todoId + 'delete',{
+            fetch('/todos/' + todoId + '/delete',{
                 method: 'DELETE'
             })
         }
