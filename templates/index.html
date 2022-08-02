@@ -41,7 +41,7 @@
     <ul id="todos">
         {% for todo in todos %}
             <li>
-                <input class="check_completed" type="checkbox" data-id="{{ todo.id }}" {% if todo.completed %} checked {% endif %}/>
+                <input class="check-completed" type="checkbox" data-id="{{ todo.id }}" {% if todo.completed %} checked {% endif %}/>
                 {{ todo.description }}
             </li>
         {% endfor %}
@@ -77,6 +77,7 @@
     document.getElementById('form').onsubmit = function (e) {
         e.preventDefault();
         const desc = descInput.value;
+        descInput.value = '';
 
         fetch('/todos/create', {
             method: 'POST',
