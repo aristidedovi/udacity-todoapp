@@ -74,7 +74,7 @@ def delete_todo(todo_id):
     return redirect(url_for('index'))
 
 
-@app.route('/')
+@app.route('/', methods=['POST','DELETE'])
 def index():
     return render_template('index.html', todos=Todo.query.order_by('id').all())
 
