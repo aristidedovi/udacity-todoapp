@@ -70,8 +70,8 @@ def delete_todo(todo_id):
     finally:
         db.session.close()
     
-    return jsonify({'success': True})
-    #return redirect(url_for('index'))
+    #return jsonify({'success': True})
+    return redirect(url_for('index'))
 
 
 @app.route('/')
