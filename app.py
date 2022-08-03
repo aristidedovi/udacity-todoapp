@@ -12,7 +12,7 @@ migrate = Migrate(app, db)
 class TodoList(db.Model):
     __tablename__ = 'todolists'
     id = db.Column(db.Integer, primary_key=True)
-    nqme = db.Column(db.String(), nullable=False)
+    name = db.Column(db.String(), nullable=False)
     todos = db.relationship('Todo', backref='list', lazy=True)
 
     def __repr__(self):
