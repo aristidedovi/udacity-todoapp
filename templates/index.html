@@ -56,9 +56,9 @@
     for (let i = 0; i  < btns.length; i++ ) {
         const btn = btns[i];
         btn.onclick = function(e) {
-            const todoId = e.target.dataset['id']
+            const todoId = e.target.dataset['id'];
 
-            fetch('/todos/'+todoId ,{
+            fetch('/todos/' + todoId ,{
                 method: 'DELETE'
             })
         }
