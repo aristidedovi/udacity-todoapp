@@ -95,7 +95,8 @@ def get_list_todos(list_id):
 
 @app.route('/', methods=['GET','POST','DELETE'])
 def index():
-    return render_template('index.html', todos=Todo.query.order_by('id').all())
+    return redirect(url_for('get_list_todos', list_id=1))
+    #return render_template('index.html', todos=Todo.query.order_by('id').all())
 
 
 
